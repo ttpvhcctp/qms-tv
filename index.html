@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Màn hình hiển thị trung tâm – QMS đa điểm (Demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tv.css">
+</head>
+<body>
+
+<!-- Bộ icon nét, nhúng sẵn để chạy được khi không có Internet -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V6l8-3 8 3v15M2 21h20M10 21v-4h4v4M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4a3 3 0 0 1 0 6M21 20c0-2.6-1.7-4.8-4-5.6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 10v4h3l7 5V5L6 10z"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 18h.01"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 12.5a10 10 0 0 1 5-2.6M14 10a10 10 0 0 1 5 2.5M2 8.8a15 15 0 0 1 4.2-2.6M10.7 5A15 15 0 0 1 22 8.8M12 20h.01"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2v-3a2 2 0 0 0 0-4z"/><path d="M9 5v14" stroke-dasharray="2 2"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-exit" viewBox="0 0 24 24"><path d="M14 4h5v16h-5M10 8l-4 4 4 4M6 12h10"/></symbol>
+  </defs>
+</svg>
+
+<div class="stage">
+  <div class="tv-frame" id="frame">
+    <div class="tv" id="tv">
+
+      <!-- ===== HEADER (trái, 1152 × 120) ===== -->
+      <header class="hdr">
+        <div class="logo" title="Thay bằng logo chính thức"><svg class="ic"><use href="#i-building"/></svg><span>LOGO</span></div>
+        <div class="org">
+          <strong>TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG</strong>
+          <span>THÀNH PHỐ HỒ CHÍ MINH</span>
+        </div>
+        <div class="total" id="total"><svg class="ic"><use href="#i-users"/></svg><span>Đang chờ</span><b id="totalNum">0</b></div>
+        <div class="clock"><b id="clockTime">--:--</b><span id="clockDate"></span></div>
+      </header>
+
+      <!-- ===== VIDEO (1088 × 612) ===== -->
+      <section class="media" id="media">
+        <div class="slides" id="slides"></div>
+        <div class="media-chip">VIDEO MINH HỌA · thay bằng playlist thật</div>
+        <div class="media-bar"><i id="mediaBar"></i></div>
+      </section>
+
+      <!-- ===== DẢI TÌNH HÌNH HÀNG ĐỢI (1088 × 192) ===== -->
+      <section class="strip" id="strip">
+        <div class="cards" id="cards"></div>
+        <div class="dots" id="dots"></div>
+      </section>
+
+      <!-- ===== DANH SÁCH SỐ VỪA GỌI (phải, 768 × 972) ===== -->
+      <section class="board" id="board">
+        <div class="board-head">
+          <span>SỐ PHIẾU</span>
+          <small>Số vừa được gọi</small>
+          <span>QUẦY</span>
+        </div>
+        <div class="board-body" id="boardBody"></div>
+
+        <!-- Trạng thái thay thế danh sách -->
+        <div class="board-state" id="boardState">
+          <div class="bs-ic" id="bsIc"></div>
+          <h3 id="bsTitle"></h3>
+          <p id="bsText"></p>
+          <div class="bs-hours" id="bsHours">
+            <div><span>Buổi sáng</span><b>07:30 – 11:30</b></div>
+            <div><span>Buổi chiều</span><b>13:30 – 16:30</b></div>
+          </div>
+        </div>
+
+        <!-- Banner mất kết nối -->
+        <div class="conn" id="conn">
+          <span class="spin"></span>
+          <div><b>Đang kết nối lại…</b><span id="connText"></span></div>
+        </div>
+      </section>
+
+      <!-- ===== CHỮ CHẠY CHÂN TRANG (1920 × 108) ===== -->
+      <footer class="ftr" id="ftr">
+        <div class="ftr-label"><svg class="ic"><use href="#i-mega"/></svg><span id="ftrLabel">THÔNG BÁO</span></div>
+        <div class="ftr-track"><div class="ftr-text" id="ftrText"></div></div>
+      </footer>
+
+      <!-- ===== KHUNG GỌI SỐ ===== -->
+      <div class="call" id="call" aria-live="assertive">
+        <div class="call-card" id="callCard"></div>
+      </div>
+
+      <!-- ===== THÔNG BÁO KHẨN TOÀN MÀN HÌNH ===== -->
+      <div class="evac" id="evac">
+        <svg class="ic"><use href="#i-exit"/></svg>
+        <h2>THÔNG BÁO KHẨN</h2>
+        <p>Đề nghị Quý công dân giữ bình tĩnh, di chuyển theo hướng dẫn của cán bộ và biển chỉ dẫn lối thoát hiểm.</p>
+        <small>EMERGENCY · Please follow staff instructions and exit signs.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BẢNG MÔ PHỎNG (ẩn khi mở ?tv=1) ===== -->
+  <aside class="sim" id="sim">
+    <h4>Bảng mô phỏng</h4>
+    <p class="note">Giả lập thao tác của cán bộ và trạng thái hệ thống. Không xuất hiện trên TV thật (mở với <code>?tv=1</code>).</p>
+
+    <div class="grp">
+      <span class="lbl">Cán bộ gọi số</span>
+      <div class="row">
+        <select id="counterSel" aria-label="Chọn quầy"></select>
+        <button data-sim="next" class="pri">Gọi số tiếp theo</button>
+      </div>
+      <button data-sim="random">Gọi tại quầy ngẫu nhiên <kbd>Space</kbd></button>
+      <button data-sim="burst">Gọi dồn: 3 quầy cùng lúc <kbd>B</kbd></button>
+      <button data-sim="recall">Gọi lại số mới nhất <kbd>R</kbd></button>
+      <button data-sim="priority">Gọi số ưu tiên (V)</button>
+      <button data-sim="booking">Gọi số đặt lịch trước</button>
+      <button data-sim="transfer">Chuyển quầy 03 → 15 (Thuế)</button>
+      <label><input type="checkbox" id="autoCall"> Tự động gọi số (15–25 giây/lần)</label>
+      <div class="qinfo">Đang chờ phát: <b id="qCount">0</b> lần gọi</div>
+    </div>
+
+    <div class="grp">
+      <span class="lbl">Xử lý khi gọi dồn</span>
+      <label><input type="radio" name="policy" value="seq" checked> (a) Lần lượt, mỗi số đọc 2 lần</label>
+      <label><input type="radio" name="policy" value="merge"> (b) Gộp tối đa 3 số, mỗi số đọc 1 lần</label>
+    </div>
+
+    <div class="grp">
+      <span class="lbl">Âm thanh (chỉ để thử)</span>
+      <label><input type="checkbox" id="sound"> Ding-dong và giọng đọc của trình duyệt</label>
+      <p class="note" id="voiceNote">Bản thật phát qua loa IP bằng TTS FPT/Viettel/Google.</p>
+    </div>
+
+    <div class="grp">
+      <span class="lbl">Trạng thái hệ thống</span>
+      <button data-sim="dayStart">Đầu ngày (chưa có số được gọi)</button>
+      <label><input type="checkbox" data-state="lunch"> Nghỉ trưa</label>
+      <label><input type="checkbox" data-state="closed"> Ngoài giờ làm việc</label>
+      <label><input type="checkbox" data-state="offline"> Mất kết nối Local Server</label>
+      <label><input type="checkbox" data-state="urgent"> Chữ chạy khẩn</label>
+      <label><input type="checkbox" data-state="evac"> Thông báo khẩn toàn màn hình</label>
+    </div>
+    <div class="toast" id="toast"></div>
+  </aside>
+</div>
+
+<script src="tv.js"></script>
+</body>
+</html>
